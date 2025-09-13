@@ -1,6 +1,6 @@
 import numpy as np
 # Letra A
-dados = np.loadtxt("C:/Faculdade/Trabalho IA/arsenio_dataset.csv", delimiter=",", skiprows=1)
+dados = np.loadtxt("C:/Faculdade/Trabalho IA/av1-inteligencia-artificial/questões/arsenio_dataset.csv", delimiter=",", skiprows=1)
 
 idade = dados[:, 0]# Regressores
 sexo = dados[:, 1] # Não utilizado na letra A
@@ -62,6 +62,28 @@ print("R² comparar = ",r_squared_comparar)
         # - y_pred 
         # - residuos
 
+# Letra G: calcular o R² e o RMSE sem a coluna de 1
+X_sem_intercepto = np.column_stack((idade, uso_beber, uso_cozinhar, arsenio_agua))
 
+beta_sem_intercepto = np.linalg.inv(X_sem_intercepto.T @ X_sem_intercepto) @ (X_sem_intercepto.T @y) 
 
+y_pred_sem_intercepto = X_sem_intercepto @ beta_sem_intercepto
+r_squared_sem_intercepto = 1 - (np.sum((y - y_pred_sem_intercepto)**2) / np.sum((y - ybar)**2))
+print("R² sem intercepto = ",r_squared_sem_intercepto)
 
+#RMSE sem intercepto
+rmse_sem_intercepto = np.sqrt(np.mean((y-y_pred_sem_intercepto)**2))
+print("RMSE sem intercepto = " , rmse_sem_intercepto)
+
+# Letra H: calcular mais outras duas metricas para ambos os modelos
+# RMSE e MAE do modelo completo
+rmse_completo = np.sqrt(np.mean((y-y_pred)**2))
+mae_completo = np.mean(np.abs(y - y_pred))
+print("RMSE modelo completo = " , rmse_completo)
+print("MAE modelo completo = ", mae_completo)
+
+# RMSE e MAE do modelo alternativo
+rmse_alternativo = np.sqrt(np.mean((y-y_pred_comparar)**2))
+mae_alternativo = np.mean(np.abs(y - y_pred_comparar))
+print("RMSE modelo alternativo = " , rmse_alternativo)
+print("MAE modelo alternativo = ", mae_alternativo)
